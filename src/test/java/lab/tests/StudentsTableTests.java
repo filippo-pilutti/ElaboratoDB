@@ -17,7 +17,7 @@ import lab.utils.Utils;
 
 class StudentsTableTests {
     final static String username = "root";
-    final static String password = "";
+    final static String password = "Filippo1997.";
     final static String dbName = "labjdbc";
     
     final static ConnectionProvider connectionProvider = new ConnectionProvider(username, password, dbName);
