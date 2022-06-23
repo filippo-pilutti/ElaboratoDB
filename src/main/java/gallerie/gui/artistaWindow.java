@@ -61,6 +61,7 @@ public class artistaWindow extends JFrame {
 			ta.replaceSelection("");
 			list.stream().forEach(a -> ta.append(a.toString() + "\n"));
 			this.repaint();
+			createFrame(list);
 		});
 		
 		panel.add(btn);
@@ -72,5 +73,45 @@ public class artistaWindow extends JFrame {
 		this.pack();
 		this.setVisible(true);
 		
+	}
+	
+	private void createFrame(final List<Artista> list) {
+		JFrame frame = new JFrame("Artisti");
+		JPanel panel = new JPanel();
+		JTable table = new JTable();
+		
+		String columns[] = {
+				"Nome",
+				"Cognome",
+				"Nome d'arte",
+				"Telefono",
+				"Mail",
+				"Data morte",
+				"Codice"
+		};
+		String data[][] = new String[list.size()][7];
+		int i = 0;
+		for (Artista a : list) {
+			data[i][0] = a.getNome().isPresent() ? a.getNome().get() : "null";
+			data[i][1] = a.getCognome().isPresent() ? a.getCognome().get() : "null";
+			data[i][2] = a.getNomeArte().isPresent() ? a.getNomeArte().get() : "null";
+			data[i][3] = a.getTelefono().isPresent() ? a.getTelefono().get().toString() : "null";
+			data[i][4] = a.getMail().isPresent() ? a.getMail().get() : "null";
+			data[i][5] = a.getDataMorte().isPresent() ? a.getDataMorte().get().toString() : "null";
+			data[i][6] = String.valueOf(a.getCodArtista());
+			i++;
+		}
+		table = new JTable(data, columns);
+		table.setEnabled(false);
+		table.setShowGrid(true);
+		table.setShowVerticalLines(true);
+		table.setShowVerticalLines(true);
+		
+		
+		panel.add(new JScrollPane(table));
+		frame.add(panel);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
 	}
 }
