@@ -1,6 +1,5 @@
 package gallerie.gui;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.sql.Connection;
 import java.util.List;
@@ -8,7 +7,8 @@ import java.util.List;
 import javax.swing.*;
 
 import gallerie.db.tables.ArtistiTable;
-import gallerie.model.Artista;
+import gallerie.db.tables.ClientiTable;
+import gallerie.model.*;
 
 public class artistaWindow extends JFrame {
 
@@ -18,16 +18,15 @@ public class artistaWindow extends JFrame {
 	private static final long serialVersionUID = 5886652683163025600L;
 	private final JPanel panel;
 	private final JButton btn;
-	private final JTextArea ta;
+	private final JButton btnClienti;
 //	private final JTable table;
 	
 	public artistaWindow(final Connection connection) {
 		panel = new JPanel(new GridLayout(1, 2));
-		ta = new JTextArea();
 		btn = new JButton("Artisti");
-		btn.setSize(100, 50);
-		JScrollPane pane = new JScrollPane(ta);
-		pane.setPreferredSize(new Dimension(500, 500));
+		btnClienti = new JButton("Clienti");
+		btn.setSize(20, 12);
+		btnClienti.setSize(20,12);
 		
 //		String columns[] = {
 //				"Nome",
@@ -57,15 +56,16 @@ public class artistaWindow extends JFrame {
 		
 		btn.addActionListener(e -> {
 			List<Artista> list = new ArtistiTable(connection).findAll();
-			ta.selectAll();
-			ta.replaceSelection("");
-			list.stream().forEach(a -> ta.append(a.toString() + "\n"));
-			this.repaint();
-			createFrame(list);
+			createArtistaFrame(list);
+		});
+		
+		btnClienti.addActionListener(e -> {
+			List<Cliente> list = new ClientiTable(connection).findAll();
+			createClientiFrame(list);
 		});
 		
 		panel.add(btn);
-		panel.add(pane);
+		panel.add(btnClienti);
 		
 		this.getContentPane().add(panel);
 		
@@ -75,7 +75,7 @@ public class artistaWindow extends JFrame {
 		
 	}
 	
-	private void createFrame(final List<Artista> list) {
+	private void createArtistaFrame(final List<Artista> list) {
 		JFrame frame = new JFrame("Artisti");
 		JPanel panel = new JPanel();
 		JTable table = new JTable();
@@ -99,6 +99,42 @@ public class artistaWindow extends JFrame {
 			data[i][4] = a.getMail().isPresent() ? a.getMail().get() : "null";
 			data[i][5] = a.getDataMorte().isPresent() ? a.getDataMorte().get().toString() : "null";
 			data[i][6] = String.valueOf(a.getCodArtista());
+			i++;
+		}
+		table = new JTable(data, columns);
+		table.setEnabled(false);
+		table.setShowGrid(true);
+		table.setShowVerticalLines(true);
+		table.setShowVerticalLines(true);
+		
+		
+		panel.add(new JScrollPane(table));
+		frame.add(panel);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+	}
+	
+	private void createClientiFrame(final List<Cliente> list) {
+		JFrame frame = new JFrame("Clienti");
+		JPanel panel = new JPanel();
+		JTable table = new JTable();
+		
+		String columns[] = {
+				"Codice Fiscale",
+				"Nome",
+				"Cognome",
+				"Telefono",
+				"Mail"
+		};
+		String data[][] = new String[list.size()][5];
+		int i = 0;
+		for (Cliente c : list) {
+			data[i][0] = c.getCodFiscale();
+			data[i][1] = c.getNome();
+			data[i][2] = c.getCognome();
+			data[i][3] = String.valueOf(c.getTelefono());
+			data[i][4] = c.getMail();
 			i++;
 		}
 		table = new JTable(data, columns);
