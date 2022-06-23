@@ -1,4 +1,4 @@
-package lab.db.tables;
+package gallerie.db.tables;
 
  import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +11,9 @@ import java.util.List;
  import java.util.Objects;
  import java.util.Optional;
 
- import lab.utils.Utils;
- import lab.db.Table;
- import lab.model.Student;
+import gallerie.db.Table;
+import gallerie.model.Student;
+import gallerie.utils.Utils;
 
  public final class StudentsTable implements Table<Student, Integer> {    
      public static final String TABLE_NAME = "students";
@@ -29,7 +29,6 @@ import java.util.List;
          return TABLE_NAME;
      }
 
-     @Override
      public boolean createTable() {
          // 1. Create the statement from the open connection inside a try-with-resources
          try (final Statement statement = this.connection.createStatement()) {

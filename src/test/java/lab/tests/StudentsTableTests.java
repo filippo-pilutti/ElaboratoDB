@@ -10,10 +10,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import lab.db.ConnectionProvider;
-import lab.db.tables.StudentsTable;
-import lab.model.Student;
-import lab.utils.Utils;
+import gallerie.db.ConnectionProvider;
+import gallerie.db.tables.StudentsTable;
+import gallerie.model.Student;
+import gallerie.utils.Utils;
 
 class StudentsTableTests {
     final static String username = "root";

@@ -1,4 +1,4 @@
-package lab.model;
+package gallerie.model;
 
 import java.util.Date;
 import java.util.Objects;

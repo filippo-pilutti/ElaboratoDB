@@ -1,4 +1,4 @@
-package lab.utils;
+package gallerie.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
